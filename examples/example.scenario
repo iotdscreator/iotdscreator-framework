@@ -1,0 +1,78 @@
+attack_scenario:
+- attacker: a
+  begin: 10
+  duration: 3
+  name: nmap
+  step: reconnaissance
+dataset_creation:
+  name: example
+network_configuration:
+  link:
+  - intf1: ext
+    intf2: int
+    node1: d1
+    node2: ap
+    type: ethernet
+  - intf1: ext
+    intf2: int
+    node1: d2
+    node2: ap
+    type: ethernet
+  - intf1: ext
+    intf2: ext
+    node1: a
+    node2: ap
+    type: ethernet
+  node:
+    device:
+    - application:
+      - type: log4j_web_server
+        port: 80
+      - type: mqtt_broker
+        port: 1883
+      - broker: localhost
+        domain: home
+        type: iot_hub
+        port: 1883
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: d1
+      preset: rpi3.spec
+    - application:
+      - broker: d1
+        type: temperature
+        port: 1883
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: d2
+      preset: rpi3.spec
+    external:
+    - application:
+      - type: nmap
+      name: a
+      type: docker
+    router:
+    - interface:
+      - &id001
+        dnsmasq: true
+        interface: internet
+        ipaddr: 192.168.1.1
+        name: int
+        nbits: 24
+        type: wlan
+      - *id001
+      model: rpi3router
+      type: qemu
+      name: ap
+      preset: rpi3.spec
+      rule:
+      - dport: 80
+        tnode: d1
+        tport: 80
+        type: port_forwarding

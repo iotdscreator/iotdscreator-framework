@@ -1,0 +1,55 @@
+attack_scenario:
+  scenario_length: 20
+  attacks:
+  - begin: 5
+    attacker: att
+    type: invalid_crc
+    target: victim
+    count: 3
+    interval: 1
+    step: reconnaissance
+  - begin: 15
+    attacker: att
+    type: flooding
+    attack_type: crc_flooding
+    duration: 2
+    target: victim
+    step: action
+dataset_feature:
+  name: modbus_invalid_crc
+  interfaces:
+  - name: victim
+  hostnames:
+  - name: att
+  - name: victim
+  output_directory: ~/iotdscreator-results
+network_configuration:
+  node:
+    device:
+    - application:
+      - type: modbus_server
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: victim
+      preset: rpi3.spec
+    - application:
+      - type: modbus_client
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: att
+      preset: rpi3.spec
+  link:
+  - intf1: ext
+    intf2: internet
+    node1: victim
+    type: ethernet
+  - intf1: ext
+    intf2: internet
+    node1: att
+    type: ethernet

@@ -1,0 +1,57 @@
+attack_scenario:
+  scenario_length: 300
+  attacks:
+  - begin: 10
+    attacker: att
+    type: nmap
+    target: victim
+    duration: 60
+    step: reconnaissance
+  - begin: 120
+    attacker: att
+    type: log4j_attack
+    target: victim
+    step: infection
+dataset_feature:
+  name: log4j
+  interfaces:
+  - name: ap
+  output_directory: ~/iotdscreator-results
+network_configuration:
+  node:
+    device:
+    - application:
+      - type: log4j_web_server
+      - type: iot_hub
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: victim
+      preset: rpi3.spec
+    external:
+    - application:
+      - type: ldap_server
+      name: ldap
+      interface:
+      - name: ext
+        type: ethernet
+      image: ubuntu:20.04
+      type: docker
+      model: external
+    - application:
+      - type: nmap
+      - type: log4j_attack
+      name: att
+      type: docker
+      model: external
+      image: ubuntu:20.04
+      interface:
+      - name: ext
+        type: ethernet
+  link:
+  - type: ethernet
+    node1: victim
+    intf1: ext
+    intf2: internet

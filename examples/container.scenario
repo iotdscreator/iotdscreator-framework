@@ -1,0 +1,40 @@
+attack_scenario:
+  scenario_length: 30
+  attacks:
+  - begin: 10
+    attacker: c1
+    type: ping
+    count: 3
+    target: www.google.com
+    step: reconnaissance
+  - begin: 20
+    attacker: c1
+    type: nmap
+    scan_type: ping
+    verbose: true
+    os_scan: true
+    target: 10.201.41.89
+    step: reconnaissance
+dataset_feature:
+  name: example
+  interfaces:
+  - name: c1
+  output_directory: ~/iotdscreator-results
+network_configuration:
+  node:
+    external:
+    - application:
+      - type: ping
+      - type: nmap
+      interface:
+      - name: ext
+        type: ethernet
+      type: docker
+      name: c1
+      model: external
+      image: ubuntu:20.04
+  link:
+  - intf1: ext
+    intf2: internet
+    node1: c1
+    type: ethernet

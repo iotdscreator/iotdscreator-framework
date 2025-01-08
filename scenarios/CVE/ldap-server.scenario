@@ -1,0 +1,38 @@
+attack_scenario:
+  scenario_length: 10
+  attacks:
+  - begin: 5
+    attacker: ldap_server
+    type: ping 
+    target: ldap_server
+    count: 3
+    duration: 5
+    step: infection
+dataset_feature:
+  name: ldap_server
+  interfaces:
+  - name: ldap_server
+  hostnames:
+  - name: ldap_server
+  output_directory: ~/iotdscreator-results
+network_configuration:
+  node:
+    external:
+    - application:
+      - type: wget
+      - type: maven
+      - type: java8
+      - type: cve_2021_44228_ldap_server
+        port: 1389
+      interface:
+      - name: ext
+        type: ethernet
+      model: external
+      type: docker
+      image: openjdk:8-jdk-slim
+      name: ldap_server
+  link:
+  - intf1: ext
+    intf2: internet
+    node1: ldap_server
+    type: ethernet

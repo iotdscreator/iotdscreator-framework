@@ -1,0 +1,25 @@
+attack_scenario:
+- begin: 10
+  duration: 3
+  name: nmap
+  step: reconnaissance
+dataset_creation:
+  name: example
+network_configuration:
+  node:
+    device:
+    - application:
+      - type: log4j_web_server
+        port: 80
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: d1
+      preset: rpi3.spec
+  link:
+  - intf1: ext
+    intf2: internet
+    node1: d1
+    type: ethernet

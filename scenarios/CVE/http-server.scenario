@@ -1,0 +1,36 @@
+attack_scenario:
+  scenario_length: 15
+  attacks:
+  - begin: 5
+    attacker: http_server
+    type: ping
+    target: http_server
+    count: 3
+    duration: 5
+    step: infection
+dataset_feature:
+  name: http
+  interfaces:
+  - name: http_server
+  hostnames:
+  - name: http_server
+  output_directory: ~/iotdscreator-results
+network_configuration:
+  node:
+    external:
+    - application:
+      - type: java8
+      - type: cve_2021_44228_http_server
+        port: 8001
+      interface:
+      - name: ext
+        type: ethernet
+      model: external
+      type: docker
+      image: openjdk:8-jdk-slim
+      name: http_server
+  link:
+  - intf1: ext
+    intf2: internet
+    node1: http_server
+    type: ethernet

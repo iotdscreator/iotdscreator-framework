@@ -1,0 +1,68 @@
+attack_scenario:
+  scenario_length: 30
+  attacks:
+  - begin: 5
+    attacker: att
+    type: ping
+    target: victim
+    count: 3
+    duration: 5
+    step: reconnaissance
+  - begin: 10
+    attacker: att
+    type: nmap
+    target: victim
+    duration: 10
+    step: reconnaissance
+  - begin: 20
+    attacker: att
+    type: flooding
+    attack_type: udp_flooding
+    duration: 2
+    target: victim
+    port: 22
+    step: action
+dataset_feature:
+  name: flooding
+  interfaces:
+  - name: victim
+  hostnames:
+  - name: att
+  - name: victim
+  output_directory: ~/iotdscreator-results
+network_configuration:
+  node:
+    device:
+    - application:
+      - type: iot_hub
+        broker: 127.0.0.1
+        port: 1883
+        domain: home
+      - type: openssh_server
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: victim
+      preset: rpi3.spec
+    external:
+    - application:
+      - type: nmap
+      - type: flooding
+      interface:
+      - name: ext
+        type: ethernet
+      model: external
+      type: docker
+      image: ubuntu:20.04
+      name: att
+  link:
+  - intf1: ext
+    intf2: internet
+    node1: victim
+    type: ethernet
+  - intf1: ext
+    intf2: internet
+    node1: att
+    type: ethernet

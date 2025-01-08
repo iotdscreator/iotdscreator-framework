@@ -1,0 +1,45 @@
+import os, sys, logging
+import pathlib
+fpath = pathlib.Path(__file__).parent.resolve()
+root_directory = os.path.abspath("{}/..".format(fpath))
+from applications.application import Application
+
+class Log4j(Application):
+    def __init__(self, app, **params):
+        name = params.get("name", app)
+        super().__init__(app, name)
+
+    # Please revise the following functions if it is different
+    # from the default way
+    def check_application(self, arch=None, os=None):
+        logging.debug("Check the application: {}".format(self.app))
+        cmds = []
+        # if arch == "aarch64" and os == "debian":
+        #     cmd = "which nmap"
+        #     cmds.append(cmd)
+        return cmds
+
+    def prepare_application(self, arch=None, os=None):
+        logging.debug("Prepare the application: {}".format(self.app))
+        cmds = []
+        cmd = "apt-get install -y curl"
+        cmds.append(cmd)
+
+        cmd = "curl -O https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.14.1/log4j-core-2.14.1.jar"
+        cmds.append(cmd)
+
+        cmd = "curl -O https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.14.1/log4j-api-2.14.1.jar"
+        cmds.append(cmd)
+        # if arch == "aarch64" and os == "debian":
+        #     cmd = "apt-get install nmap"
+        #     cmds.append(cmd)
+        return cmds
+
+    def run_application(self, arch=None, os=None, **params):
+        logging.debug("Run the application: {}".format(self.app))
+        cmds = []
+        # if arch == "aarch64" and os == "debian":
+        #     cmd = "nmap"
+        #     cmds.append(cmd)
+        return cmds
+
