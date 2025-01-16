@@ -2,6 +2,8 @@
 
 IoTDSCreator is a tool for the automatic generation of labeled datasets able to support a diversity of devices, connectivity technologies, and attacks. This framework provides a user with DC-API (Dataset Creation-Application Programming Interface), an API (in YAML keywords) by which a user can describe a target network and an attack scenario against it. 
 
+![screenshot](framework.jpg)
+
 The current version of IoTDSCreator can generate datasets with 193 features based on 26 types of IoT devices, 3 types of communication links, and 15 types of IoT applications. Through considering the diverse of IoT environments, IoTDScreator is highly scalable with respect to two dimensions, which are the improved entity scalability, and the resource scalability to configure a large-scale virtual network.
 
 ## 1. Install necessary packages
