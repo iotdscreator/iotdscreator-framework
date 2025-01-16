@@ -1,5 +1,5 @@
 # Host Features
-IoTDSCreator extracts 40 host features, described below. The direction ("forward" and "backward") is determined by the initial packet. The "forward" is the direction from a source address of the first packet to a destination address of the first packet. The "backward" is the opposite direction.
+IoTDSCreator extracts 40 host features, described below. 
 
 <table>
   <tr>
