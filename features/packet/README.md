@@ -6,123 +6,57 @@ IoTDSCreator extracts 20 packet features, described below.
     <td align="center"><b>Name</b></td><td align="center"><b>Description</b></td>
   </tr>
   <tr>
-    <td>clone_system_call</td><td>The number of clone system calls ('clones').</td>
+    <td>acknowledge_number</td><td>The ACK number.</td>
   </tr>
   <tr>
-    <td>cpu_idle_time_percentage</td><td>The percentage of the CPU idle time.</td>
+    <td>destination_mac_address</td><td>The destination MAC address.</td>
   </tr>
   <tr>
-    <td>cpu_load_average_per_15_minutes</td><td>The average load of the CPU per 15 minutes.</td>
+    <td>ip_identifier</td><td>The identifier in the IP header.</td>
   </tr>
   <tr>
-    <td>cpu_load_average_per_5_minutes</td><td>The average load of the CPU per 5 minutes.</td>
+    <td>is_ack</td><td>The flag if an ACK flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_load_average_per_minute</td><td>The average load of the CPU per minute.</td>
+    <td>is_cwr</td><td>The flag if an CWR flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_running_time_on_system_mode</td><td>The CPU running time in the system mode.</td>
+    <td>is_ece</td><td>The flag if an ECE flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_running_time_on_user_mode</td><td>The CPU running time in the user mode.</td>
+    <td>is_fin</td><td>The flag if an FIN flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_stolen_time_percentage</td><td>The percentage of the CPU stolen time.</td>
+    <td>is_psh</td><td>The flag if an PSH flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_utilization_on_interrupt_handling</td><td>The CPU utilization when handling an interrupt.</td>
+    <td>is_rst</td><td>The flag if an RST flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_utilization_on_kernel_mode</td><td>The CPU utilization in the kernel mode.</td>
+    <td>is_syn</td><td>The flag if an SYN flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_utilization_on_user_mode</td><td>The CPU utilization in the user mode.</td>
+    <td>is_urg</td><td>The flag if an URG flag is enabled in a packet.</td>
   </tr>
   <tr>
-    <td>cpu_waiting_time_percentage</td><td>The percentage of the CPU waiting time.</td>
+    <td>network_protocol</td><td>The protocol number of the network layer.</td>
   </tr>
   <tr>
-    <td>current_vm_space_megabytes</td><td>The current space used by VM in megabytes.</td>
+    <td>sequence_number</td><td>The SEQ number.</td>
   </tr>
   <tr>
-    <td>disk_busy_time</td><td>The busy time of disk.</td>
+    <td>source_mac_address</td><td>The source MAC address.</td>
   </tr>
   <tr>
-    <td>filesystem_metadata</td><td>The metadata of the filesystem.</td>
+    <td>total_ip_packet_length</td><td>The total length of the IP packet.</td>
   </tr>
   <tr>
-    <td>free_swap_space_megabytes</td><td>.</td>
+    <td>transport_protocol</td><td>The protocol number of the transport layer.</td>
   </tr>
   <tr>
-    <td>kernel_malloc</td><td>.</td>
+    <td>ttl</td><td>The TTL value.</td>
   </tr>
   <tr>
-    <td>maximum_vm_space_megabytes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_active_tcp_open</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_context_switching</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_exit_processes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_interrupt</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_open_processes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_passive_tcp_open</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_received_icmp_datagrams</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_received_tcp_segments</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_received_udp_datagrams</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_retransmission</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_running_threads</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_transmitted_icmp_datagrams</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_transmitted_tcp_segments</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_transmitted_udp_datagrams</td><td>.</td>
-  </tr>
-  <tr>
-    <td>number_of_zombie_processes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>page_cache_megabytes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>read_request_throughput</td><td>.</td>
-  </tr>
-  <tr>
-    <td>sleeping_uninterruptible</td><td>.</td>
-  </tr>
-  <tr>
-    <td>total_free_memory_megabytes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>total_memory_megabytes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>total_swap_space_megabytes</td><td>.</td>
-  </tr>
-  <tr>
-    <td>write_request_throughtput</td><td>.</td>
+    <td>window_size</td><td>The advertisement window size.</td>
   </tr>
 </table>
