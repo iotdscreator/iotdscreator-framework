@@ -153,15 +153,24 @@ class AttackScenarioExecutor(Module):
             vtype = node.get_virtualization_type()
             os = node.get_operating_system()
             arch = node.get_architecture()
+            options = {}
+            options["names"] = self.names
             for app in apps:
                 if app.get_application_type() in aapps:
                     continue
-                cmds = app.run_application(arch=arch, os=os)
+                cmds = app.run_application(arch=arch, os=os, **options)
                 request = {}
                 request["name"] = node.get_name()
                 request["shell"] = node.get_shell_prompts()
 
                 for cmd in cmds:
+                    cmd = cmd.strip()
+                    if cmd[-1] == "&":
+                        request["background"] = True
+                        cmd = cmd[:-1]
+                    else:
+                        request["background"] = False
+
                     request["opcode"] = "control"
                     request["type"] = vtype
                     request["command"] = cmd
@@ -194,14 +203,14 @@ class AttackScenarioExecutor(Module):
 
                 if curr > attack.get_start_time():
                     logging.info(" - Performing the attack ({}) at {}".format(attack.get_attack_type(), curr))
-                    attacker = attack.get_attacker()
+                    initiator = attack.get_initiator()
                     vtype = attack.get_virtualization_type()
                     pnode = attack.get_pnode()
                     cmds = attack.perform_attack()
                     shell_prompts = attack.get_shell_prompts()
                 
                     request = {}
-                    request["name"] = attacker
+                    request["name"] = initiator
                     request["shell"] = shell_prompts
                     for cmd in cmds:
                         request["opcode"] = "control"
@@ -278,6 +287,8 @@ class AttackScenarioExecutor(Module):
                 logging.error("Please check the name of the attacker in the attack scenario")
                 sys.exit(1)
             logging.debug("name: {}, attacker: {}".format(name, attacker))
+            iname = attack.get("initiator", attacker.get_name())
+            initiator = nodes[iname]
             begin = attack.get("begin", 0)
             atype = attack.get("type", "none")
             step = attack.get("step", "none")
@@ -286,6 +297,8 @@ class AttackScenarioExecutor(Module):
             options = attack.copy()
             if "attacker" in options:
                 del options["attacker"]
+            if "initiator" in options:
+                del options["initiator"]
             if "target" in options:
                 del options["target"]
             if "begin" in options:
@@ -297,13 +310,16 @@ class AttackScenarioExecutor(Module):
             if "duration" in options:
                 del options["duration"]
 
+            if "names" not in options:
+                options["names"] = self.names
+
             if target in self.nodes:
                 interfaces = self.nodes[target].get_interfaces()
                 intf = interfaces[0]
                 ipaddr = intf.get_ipaddr()
                 target = ipaddr
-            logging.info("attacker: {}, target: {}, begin: {}, atype: {}, step: {}, duration: {}".format(attacker, target, begin, atype, step, duration))
-            alst.append(Attack(attacker, target, begin, atype, step, duration, **options))
+            logging.info("attacker: {}, initiator: {}, target: {}, begin: {}, atype: {}, step: {}, duration: {}".format(attacker, initiator, target, begin, atype, step, duration))
+            alst.append(Attack(attacker, initiator, target, begin, atype, step, duration, **options))
 
             self.start_time = start = int(time.time())
             self.end_time = self.start_time + scenario_length + ADDITIONAL_TIME

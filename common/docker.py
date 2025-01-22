@@ -118,9 +118,20 @@ class DockerFunctions:
 
         # 3. Run the docker image
         image = self.node.get_image()
+        ports = []
+        apps = self.node.get_applications()
+        for app in apps:
+            port = app.get_param_value("port")
+            if port:
+                ports.append(port)
         cmd = []
         cmd.append("docker")
         cmd.append("run")
+
+        for port in ports:
+            cmd.append("-p")
+            cmd.append("{}:{}".format(port, port))
+
         cmd.append("--name")
         cmd.append(name)
         cmd.append("--rm")

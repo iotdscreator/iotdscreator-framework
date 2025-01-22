@@ -222,9 +222,13 @@ class Agent:
                 cmds = []
                 cmds.append("docker")
                 cmds.append("exec")
-                cmds.append("-it")
-                if "background" in request and request["background"]:
-                    cmds.append("-d")
+                if "background" in request:
+                    if request["background"]:
+                        cmds.append("-dit")
+                    else:
+                        cmds.append("-it")
+                else:
+                    cmds.append("-it")
                 cmds.append(nname)
                 cmds.append(request["command"])
                 capture = request.get("capture", True)

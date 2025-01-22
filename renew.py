@@ -197,9 +197,9 @@ def make_config(ofname, pnames, fnames, hnames, tnames):
     # window_length and sliding_window_interval are in milliseconds
     conf["feature_extractor"]["network_window_manager"] = {}
     conf["feature_extractor"]["network_window_manager"]["name"] = "network_window_manager"
-    conf["feature_extractor"]["network_window_manager"]["window_length"] = 1000
+    conf["feature_extractor"]["network_window_manager"]["window_length"] = 10000
     conf["feature_extractor"]["network_window_manager"]["sliding_window"] = True
-    conf["feature_extractor"]["network_window_manager"]["sliding_window_interval"] = 100
+    conf["feature_extractor"]["network_window_manager"]["sliding_window_interval"] = 1000
 
     # window_length and sliding_window_interval are in milliseconds
     conf["feature_extractor"]["host_window_manager"] = {}

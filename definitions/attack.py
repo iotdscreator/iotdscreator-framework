@@ -13,8 +13,9 @@ from modules.scenario_verifier import ScenarioVerifier
 from definitions.node import Node
 
 class Attack:
-    def __init__(self, attacker, target, begin, atype, step, duration=0, **params):
+    def __init__(self, attacker, initiator, target, begin, atype, step, duration=0, **params):
         self.attacker = attacker
+        self.initiator = initiator
         self.target = target
         self.begin = begin
         self.duration = duration
@@ -48,8 +49,11 @@ class Attack:
     def get_attacker(self):
         return self.attacker.get_name()
 
+    def get_initiator(self):
+        return self.initiator.get_name()
+
     def get_pnode(self):
-        return self.attacker.get_pnode()
+        return self.initiator.get_pnode()
 
     def get_attack_type(self):
         return self.atype
@@ -58,7 +62,7 @@ class Attack:
         return self.attack_step
 
     def get_virtualization_type(self):
-        return self.attacker.get_virtualization_type()
+        return self.initiator.get_virtualization_type()
 
     def output(self):
         return "{},{},{},{},{},{}\n".format(self.attacker.get_name(), self.target, self.atype, self.start_time, self.duration, self.attack_step)
@@ -76,11 +80,11 @@ class Attack:
         self.finished = value
 
     def get_shell_prompts(self):
-        return self.attacker.get_shell_prompts()
+        return self.initiator.get_shell_prompts()
 
     def perform_attack(self):
-        arch = self.attacker.get_architecture()
-        os = self.attacker.get_operating_system()
+        arch = self.initiator.get_architecture()
+        os = self.initiator.get_operating_system()
         attack = self.attack
         params = self.params
         target = self.target

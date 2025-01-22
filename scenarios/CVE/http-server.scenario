@@ -1,12 +1,12 @@
 attack_scenario:
-  scenario_length: 15
+  scenario_length: 30
   attacks:
   - begin: 5
     attacker: http_server
-    type: ping
+    initiator: victim
+    type: http_simple_get_request
     target: http_server
-    count: 3
-    duration: 5
+    port: 8001
     step: infection
 dataset_feature:
   name: http
@@ -17,6 +17,16 @@ dataset_feature:
   output_directory: ~/iotdscreator-results
 network_configuration:
   node:
+    device:
+    - application:
+      - type: ping
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: victim
+      preset: rpi3.spec
     external:
     - application:
       - type: java8
@@ -33,4 +43,8 @@ network_configuration:
   - intf1: ext
     intf2: internet
     node1: http_server
+    type: ethernet
+  - intf1: ext
+    intf2: internet
+    node1: victim
     type: ethernet

@@ -18,9 +18,11 @@ from applications.ldap_server import LdapServer
 from applications.wget import Wget
 from applications.malware_server import MalwareServer
 from applications.ping import Ping
+from applications.java8 import Java8
 from applications.maven import Maven
 from applications.log4j_web_server import Log4jWebServer
 from applications.cve_2021_44228_vulnerable_client import Cve202144228VulnerableClient
+from applications.http_simple_get_request import HttpSimpleGetRequest
 
 device_classes = {}
 device_classes["rpi3"] = Rpi3
@@ -49,9 +51,11 @@ application_classes["ldap_server"] = LdapServer
 application_classes["wget"] = Wget
 application_classes["malware_server"] = MalwareServer
 application_classes["ping"] = Ping
+application_classes["java8"] = Java8
 application_classes["maven"] = Maven
 application_classes["log4j_web_server"] = Log4jWebServer
 application_classes["cve_2021_44228_vulnerable_client"] = Cve202144228VulnerableClient
+application_classes["http_simple_get_request"] = HttpSimpleGetRequest
 
 def get_device_class(name):
     ret = None

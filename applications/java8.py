@@ -7,13 +7,18 @@ from applications.application import Application
 class Java8(Application):
     def __init__(self, app, **params):
         name = params.get("name", app)
-        super().__init__(app, name)
+        if "name" in params:
+            del params["name"]
+        super().__init__(app, name, **params)
 
     # Please revise the following functions if it is different
     # from the default way
     def check_application(self, arch=None, os=None):
         logging.debug("Check the application: {}".format(self.app))
         cmds = []
+
+        cmd = "must"
+        cmds.append(cmd)
         # if arch == "aarch64" and os == "debian":
         #     cmd = "which nmap"
         #     cmds.append(cmd)
@@ -22,7 +27,7 @@ class Java8(Application):
     def prepare_application(self, arch=None, os=None):
         logging.debug("Prepare the application: {}".format(self.app))
         cmds = []
-        cmd = "apt-get install openjdk-8-jre-headless"
+        cmd = "apt-get install -y openjdk-8-jre-headless"
         cmds.append(cmd)
         # if arch == "aarch64" and os == "debian":
         #     cmd = "apt-get install nmap"

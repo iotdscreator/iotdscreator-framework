@@ -1,13 +1,21 @@
 attack_scenario:
-  scenario_length: 10
+  scenario_length: 20
   attacks:
   - begin: 5
-    attacker: ldap_server
+    attacker: att
     type: ping 
     target: ldap_server
     count: 3
     duration: 5
-    step: infection
+    step: reconnaissance
+  - begin: 15
+    attacker: att
+    type: flooding
+    attack_type: syn_flooding
+    duration: 3
+    target: ldap_server
+    port: 1389
+    step: action
 dataset_feature:
   name: ldap_server
   interfaces:
@@ -17,6 +25,17 @@ dataset_feature:
   output_directory: ~/iotdscreator-results
 network_configuration:
   node:
+    device:
+    - application:
+      - type: ping
+      - type: flooding
+      interface:
+      - name: ext
+        type: ethernet
+      model: rpi3
+      type: qemu
+      name: att
+      preset: rpi3.spec
     external:
     - application:
       - type: wget
@@ -35,4 +54,8 @@ network_configuration:
   - intf1: ext
     intf2: internet
     node1: ldap_server
+    type: ethernet
+  - intf1: ext
+    intf2: internet
+    node1: att
     type: ethernet

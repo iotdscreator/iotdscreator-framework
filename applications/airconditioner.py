@@ -9,7 +9,9 @@ from applications.application import Application
 class Airconditioner(Application):
     def __init__(self, app, **params):
         name = params.get("name", app)
-        super().__init__(app, name)
+        if "name" in params:
+            del params["name"]
+        super().__init__(app, name, **params)
         self.broker = params.get("broker", "127.0.0.1")
         self.port = params.get("port", 1883)
         self.domain = params.get("domain", "home")

@@ -199,11 +199,11 @@ feature_extractor:
       min_number_of_open_processes: true
   network_window_manager:
     name: network_window_manager
-    window_length: 10000
+    window_length: 100000
     sliding_window: true
-    sliding_window_interval: 1000
+    sliding_window_interval: 10000
   host_window_manager:
     name: host_window_manager
-    window_length: 10000
+    window_length: 100000
     sliding_window: true
-    sliding_window_interval: 1000
+    sliding_window_interval: 10000

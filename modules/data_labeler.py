@@ -167,6 +167,10 @@ class DataLabeler(Module):
                     pcap = dpkt.pcap.Reader(file)
                     for timestamp, packet_data in pcap:
                         eth = dpkt.ethernet.Ethernet(packet_data)
+
+                        if eth.type != dpkt.ethernet.ETH_TYPE_IP:
+                            continue
+
                         ip = eth.data
                         try:
                             ip_id = ip.id

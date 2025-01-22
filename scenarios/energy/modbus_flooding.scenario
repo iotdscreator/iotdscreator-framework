@@ -40,7 +40,10 @@ network_configuration:
       preset: rpi3.spec
   link:
   - intf1: ext
-    intf2: ext
+    intf2: internet
     node1: victim
-    node2: att
-    type: serial
+    type: ethernet
+  - intf1: ext
+    intf2: internet
+    node1: att
+    type: ethernet

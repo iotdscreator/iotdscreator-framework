@@ -7,7 +7,9 @@ from applications.application import Application
 class Flooding(Application):
     def __init__(self, app, **params):
         name = params.get("name", app)
-        super().__init__(app, name)
+        if "name" in params:
+            del params["name"]
+        super().__init__(app, name, **params)
         self.atype = params.get("attack_type", "syn_flooding")
         self.duration = params.get("duration", 10)
         self.target = params.get("target", None)
